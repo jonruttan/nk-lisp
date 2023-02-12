@@ -1,4 +1,5 @@
 Copyright 2023 [Jon Ruttan](jonruttan@gmail.com)
+
 PicoLisp Copyright (c) Software Lab. Alexander Burger
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
