@@ -857,6 +857,18 @@
 				:(reptn 8 (setq n (2* n>
 				-> 256
 
+		(do symbol 'num24 'condition 'step 'body) -> any
+			Set the symbol to num24, test it against the condition and return
+			nil if it evaluates to nil.
+			Else execute the elements of body, evaluates step and sets symbol
+			to its return value, then repeat the process until the condition
+			evaluates to nil. The result of the	last element of body is
+			returned
+			Example:
+				:(do i 0 (lessp i 8) (1+ i) (prin1 i))
+				01234567-> 7
+
+
 		(if 'condition trueExpression falseBody) -> any
 			Test the condition and execute the trueExpression if non-nil.
 			Else execute the falseBody. Note that for the true case only
