@@ -1,18 +1,18 @@
-PROG_NAME=8kl
+PROG_NAME=nkl
 PROG_ORIG=100
-DATA_ORIG=1800
+DATA_ORIG=1900
 
 LDFLAGS=/N/Y/E
 
-CPM = cpm
+CPM = @[ -x ./bin/cpm ] && ./bin/cpm || cpm
 
 FILES = README.md COPYING Makefile mk.bat \
-	8kl.doc structures\
-	8klisp.mac 8klisp.def \
+	nkl.doc structures\
+	nklisp.mac nklisp.def \
 	inout.mac subr.mac garbage.mac prim.mac fsubr.mac systab.mac \
 	factor.l nqueen.l snapshot.l too.l
 
-OBJS =	8klisp.rel \
+OBJS =	nklisp.rel \
 	inout.rel \
 	subr.rel \
 	garbage.rel \
@@ -34,13 +34,13 @@ $(PROG_NAME).com: $(OBJS)
 $(OBJS): %.rel : %.mac
 	$(CPM) bin/m80 =$<
 
-8klisp.rel:		8klisp.mac 8klisp.def
-inout.rel:		inout.mac 8klisp.def
-subr.rel:		subr.mac 8klisp.def
-garbage.rel:	garbage.mac 8klisp.def
-prim.rel:		prim.mac 8klisp.def
-fsubr.rel:		fsubr.mac 8klisp.def
-systab.rel:		systab.mac 8klisp.def
+nklisp.rel:		nklisp.mac nklisp.def
+inout.rel:		inout.mac nklisp.def
+subr.rel:		subr.mac nklisp.def
+garbage.rel:	garbage.mac nklisp.def
+prim.rel:		prim.mac nklisp.def
+fsubr.rel:		fsubr.mac nklisp.def
+systab.rel:		systab.mac nklisp.def
 
 clean:
 	rm -f $(PROG_NAME).com *.rel *.prn *.sym *~
