@@ -376,8 +376,9 @@
 			but only by resetting nkLisp (^C).
 
 		(radix 'byte) -> byte
-			Set the number radix to the supplied argument and return
-			the previous number radix.
+			Set the number radix to "byte" and return the previous
+			radix. The argument 0 is special: it leaves the radix
+			unchanged and simply returns the current value.
 			Example:
 				:(+ 6 7)
 				-> 13
@@ -465,6 +466,17 @@
 			C set to the system call number and possibly DE set to the
 			second argument. Returned is the content of the HL register
 			pair.
+
+		(call 'address ['de]) -> Areg
+			A call to a machine language subroutine at "address". The
+			DE register is set to the second argument when specified.
+			Return value is the content of the A register.
+
+		(port 'address ['byte]) -> byte
+			Z80 port I/O. With one argument, reads (IN) from port
+			"address" and returns the byte read. With two arguments,
+			writes (OUT) "byte" to port "address" and returns the
+			byte written.
 
 		(gc) -> t
 			Force a garbage collection. If the value of the SYMBOL "gc"
