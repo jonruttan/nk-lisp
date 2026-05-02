@@ -1,0 +1,14 @@
+# nkLisp - CP/M project. Default to CRLF for source and docs intended
+# for the target system; explicit LF only for host-side tooling.
+
+* text=auto eol=crlf
+
+# Host-side tooling that requires LF
+Makefile          text eol=lf
+.gitattributes    text eol=lf
+.gitignore        text eol=lf
+.editorconfig     text eol=lf
+
+# Don't normalize binaries
+*.com binary
+*.rel binary
