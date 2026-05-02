@@ -37,8 +37,13 @@ compact:
 
 ## Documentation
 
-The canonical language reference is [nkl.doc](nkl.doc), which lists all
-primitives, special forms, and runtime behavior.
+  - **[nkl-book.md](nkl-book.md)** — guide for new users: getting
+    started, the language's distinguishing features, common pitfalls,
+    and a worked example.
+  - **[nkl-ref.md](nkl-ref.md)** — reference manual: every primitive
+    documented with signature, semantics, and examples.
+  - **[nkl-qref.md](nkl-qref.md)** — quick reference / cheatsheet:
+    one entry per primitive.
 
 
 ## Getting Started

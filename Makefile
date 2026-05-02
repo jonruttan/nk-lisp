@@ -9,7 +9,7 @@ LDFLAGS=/N/Y/E
 CPM = @[ -x ./bin/cpm ] && ./bin/cpm || cpm
 
 FILES = README.md LICENSE.md Makefile mk.bat \
-	nkl.doc structures \
+	nkl-book.md nkl-ref.md nkl-qref.md structures \
 	nklisp.mac nklisp.def \
 	inout.mac subr.mac garbage.mac prim.mac fsubr.mac systab.mac \
 	factor.l nqueen.l snapshot.l too.l
