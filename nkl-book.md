@@ -270,6 +270,36 @@ garbage past the end of the file.
 t                         [<-- terminator]
 ```
 
+### 5.5. Numeric tokens read as numbers, not symbols
+
+The reader tries to parse each token as a number first; only if that
+fails does it become a symbol. So `'0`, `'1`, `'-3`, `'1+` and any
+other numeric-looking token are *numbers*, not single-character or
+short symbols of the same name. Primitives that strictly require a
+symbol — `ascii`, `unpack`, `intern` — will refuse them:
+
+```lisp
+(ascii 'A)
+-> 65
+
+(ascii '0)
+0: symbol error               [drops into a break loop]
+```
+
+If you genuinely need a symbol whose print-name happens to look
+numeric, build it via `char` (a symbol from a single byte) or `pack`
+(a symbol from a list of single-character symbols):
+
+```lisp
+(char 48)
+-> 0                          [the symbol "0", not the number]
+(ascii (char 48))
+-> 48
+
+(pack (list (char 49) (char 50)))
+-> 12                         [the symbol "12"]
+```
+
 ---
 
 ## 6. Defining functions
