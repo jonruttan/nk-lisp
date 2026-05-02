@@ -12,6 +12,7 @@
 (loadSpec '(t-arith l))
 (loadSpec '(t-list l))
 (loadSpec '(t-pred l))
+(loadSpec '(t-catch l))
 
 (bdos 0)
 t
