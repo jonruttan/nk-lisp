@@ -13,6 +13,8 @@
 (loadSpec '(t-list l))
 (loadSpec '(t-pred l))
 (loadSpec '(t-catch l))
+(loadSpec '(t-sym l))
+(loadSpec '(t-io l))
 
 (bdos 0)
 t
