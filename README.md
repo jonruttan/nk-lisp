@@ -3,28 +3,42 @@
 nkLisp, a fork of 8kLisp, is a very compact Lisp implementation for CP/M, whose
 object code size is - as the name says - exactly n kBytes.
 
-The original 8kLisp restricted its size to 8 kBytes. nkLisp lifts this hard
+The original 8kLisp was restricted in size to 8 kBytes. nkLisp removes this
 limit.
 
 
 ## Description
 
-nklisp has some non-standard features, which make programs a bit faster and more compact:
+nklisp has some non-standard features, which make programs a bit faster and more
+compact:
   
   - **Implied lambda**
-    - A list representing a functional body, like user-defined functions or the second argument to 'apply', does not use the special atom 'lambda' found in other Lisps, but is recognized by context.
+    - A list representing a functional body, like user-defined functions or the
+      second argument to 'apply', does not use the special atom 'lambda' found
+      in other Lisps, but is recognized by context.
 
   - **Implied prog**
-    - The fact that excessive symbols in the parameter list of a functional body are bound to nil, can be used to create local variables (Other Lisps use the function "prog" for that purpose). Besides this, "go" or "return" can be used anywhere inside a nkLisp function.
+    - The fact that excessive symbols in the parameter list of a functional body
+      are bound to nil, can be used to create local variables (Other Lisps use
+      the function "prog" for that purpose). Besides this, "go" or "return" can
+      be used anywhere inside a nkLisp function.
 
   - **Case Sensitive**
-    - The nkLisp reader always distinguishes between uppercase and lowercase letters.
+    - The nkLisp reader always distinguishes between uppercase and lowercase
+      letters.
 
   - **Comments**
-    - The comment characters are '[' and ']'. Anything between will be ignored by nkLisp (comments may be nested).
+    - The comment characters are '[' and ']'. Anything between will be ignored
+      by nkLisp (comments may be nested).
 
   - **Super-Parenthesis**
     - The super-parenthesis characters are '<' and '>'.
+
+
+## Documentation
+
+The canonical language reference is [nkl.doc](nkl.doc), which lists all
+primitives, special forms, and runtime behavior.
 
 
 ## Getting Started
@@ -40,7 +54,8 @@ nklisp has some non-standard features, which make programs a bit faster and more
 
 #### On CP/M
 
-To build on CP/M transfer the project files and *M80.COM* and *L80.COM* to the CP/M system and issue the following commands:
+To build on CP/M transfer the project files and *M80.COM* and *L80.COM* to the
+CP/M system and issue the following commands:
 
 ```sh
 M80 =NKLISP
@@ -53,11 +68,16 @@ M80 =SYSTAB
 L80 /P:100,/D:1900,NKLISP,INOUT,SUBR,GARBAGE,PRIM,FSUBR,SYSTAB,NKL/N/Y/E
 ```
 
+The `/D:` value must match `HIHEAP` in `nklisp.def` (currently `19H` →
+`0x1900`); the Makefile-driven build derives this automatically.
+
+
 #### On Another OS
 
 To build on systems supported by the https://github.com/jhallen/cpm emulator:
 
-1. Build the emulator and install the resulting *cpm* executable to the project's *bin/* directory or somewhere within the PATH.
+1. Build the emulator and install the resulting *cpm* executable to the
+project's *bin/* directory or somewhere within the PATH.
 
 2. Copy M80.COM and L80.COM to the project's *bin/* directory:
 
@@ -105,18 +125,24 @@ make run
 
 ## License
 
-This project is licensed under the [MIT] License - see the LICENSE.md file for details.
+This project is licensed under the [MIT] License - see the LICENSE.md file for
+details.
 
 
 ## References
 
 Alexander Burger. 8kLisp. CP/M program, circa 1986-1987.
 
-From the [Computer History Museum][]'s [Software Preservation Group][] archive, [8kLisp][8kLisp. CP/M program, circa 1986-1987].
+From the [Computer History Museum][]'s [Software Preservation Group][] archive,
+[8kLisp][8kLisp. CP/M program, circa 1986-1987].
 
-> The last version of the immediate predecessor of PicoLisp, an 8bit version for Z80 called 8kLisp. The filestamps are preserved from when the files where copied from CP/M (1986 and 1987, CP/M didn't have such meta data), and the explicit dates in the sources are from March 1986 through June 1987.[^1]
+> The last version of the immediate predecessor of PicoLisp, an 8bit version for
+  Z80 called 8kLisp. The filestamps are preserved from when the files where
+  copied from CP/M (1986 and 1987, CP/M didn't have such meta data), and the
+  explicit dates in the sources are from March 1986 through June 1987.[^1]
 
-The version from the archive is missing the *if, when,* and *unless* functions, and has an undocumented *do* function.
+The version from the archive is missing the *if, when,* and *unless* functions,
+and has an undocumented *do* function.
 
 [Computer History Museum]: http://www.computerhistory.org/
 [Software Preservation Group]: http://www.softwarepreservation.org/
