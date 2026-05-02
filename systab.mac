@@ -67,6 +67,7 @@ STEPSYM::
 PROTECT::
 	SYMB 0,RUN,"run"
 	SYMB 0,STOP,"stop"
+	SYMB 0,CALL_OP,"call"
 	SYMB 0,BIOS,"bios"
 	SYMB 0,BDOS,"bdos"
 	SYMB 0,REVALO,"revalo"
