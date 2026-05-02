@@ -1,6 +1,8 @@
 PROG_NAME=nkl
 PROG_ORIG=100
-DATA_ORIG=1900
+# DATA_ORIG is derived from HIHEAP in nklisp.def to keep them in sync.
+# HIHEAP is the high byte (e.g. 19H) of the heap-start address.
+DATA_ORIG := $(shell awk '/^HIHEAP[[:space:]]+EQU/ {gsub("H","",$$3); print $$3 "00"}' nklisp.def)
 
 LDFLAGS=/N/Y/E
 
