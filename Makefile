@@ -45,7 +45,7 @@ fsubr.rel:		fsubr.mac nklisp.def
 systab.rel:		systab.mac nklisp.def
 
 clean:
-	rm -f $(PROG_NAME).com *.rel *.prn *.sym *~
+	rm -f $(PROG_NAME).com tests.com *.rel *.prn *.sym *~ r-*.l .test-output
 
 tar:
 	tar -zcf $(PROG_NAME).tgz $(FILES)
@@ -58,3 +58,19 @@ difflist:
 
 run: $(PROG_NAME).com
 	$(CPM) $(PROG_NAME)
+
+# ----- Tests -----
+
+# Full suite. Greps stdout for "FAIL " (any spec failed) or absence of OK/FAIL
+# (interpreter crashed before harness ran).
+test test-lisp: $(PROG_NAME).com
+	@$(CPM) --exec $(PROG_NAME) runtests.l 2>&1 | tee .test-output
+	@if grep -q '^FAIL ' .test-output; then exit 1; fi
+	@grep -qE '^(OK|FAIL) ' .test-output || { echo "TESTS CRASHED"; exit 2; }
+
+# Single-spec shortcut: `make test-ctrl`, `make test-eval`, etc.
+test-%: $(PROG_NAME).com
+	@printf "(alloc 2)\n(open '(harness l) 1) (revalo 1) (close 1)\n(loadSpec '(t-$* l))\n(bdos 0)\nt\n" > r-$*.l
+	@$(CPM) --exec $(PROG_NAME) r-$*.l; rm -f r-$*.l
+
+.PHONY: test test-lisp run files difflist clean tar all
