@@ -35,7 +35,8 @@
 
 <deftest test-1minus
     (assert 0 (1- 1))
-    (assert -1 (1- 0))>
+    (assert -1 (1- 0))
+    (assert 255 (1- 256))>
 
 <deftest test-double
     (assert 6 (2* 3))
