@@ -65,7 +65,8 @@
 
 <de deftest $a
     (putd (car $a) (cons '() (cdr $a)))
-    (setq tests (cons (car $a) tests>
+    (setq tests (cons (car $a) tests))
+    (car $a>
 
 <de printFail (f)
     (prin1 'FAIL) (sp) (prin1 (car f)) (sp)
