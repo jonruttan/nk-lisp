@@ -65,6 +65,8 @@ ATSYM::
 	SYMB 0,AT_OP,"@"
 STEPSYM::
 	SYMB ZERO,STEP,"step"
+ERRSYM::
+	SYMB ERRSYM,TRET,"err"
 PROTECT::
 	SYMB 0,RUN,"run"
 	SYMB 0,STOP,"stop"
