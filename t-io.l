@@ -4,7 +4,6 @@
 <after-each (era '(tio dat))>
 
 <deftest test-create-write-read-bytes
-	[round-trip: create file, write three bytes, close, reopen, read back]
 	(create '(tio dat) 1)
 	(putc 65 1)
 	(putc 66 1)
@@ -38,41 +37,35 @@
 	(assert nil (eofp 1))
 	(do i 0 (lessp i 128) (1+ i) (getc 1))
 	(assert nil (eofp 1))
-	(getc 1)            [crosses into record 1 - unwritten]
+	(getc 1)		[crosses into unwritten record 1, trips eofp]
 	(assert t (eofp 1))
 	(close 1)>
 
 <deftest test-seek-where
-	[where reports the file pointer; seek positions it]
 	(create '(tio dat) 1)
 	(putc 65 1) (putc 66 1) (putc 67 1) (putc 68 1)
 	(close 1)
 	(open '(tio dat) 1)
-	(getc 1)               [advance past A]
-	(getc 1)               [advance past B]
+	(getc 1) (getc 1)
 	(assert 2 (where 1))
-	(seek 0 1)             [back to start]
+	(seek 0 1)
 	(assert 0 (where 1))
-	(assert 65 (getc 1))   [reads A again]
+	(assert 65 (getc 1))
 	(close 1)>
 
 <deftest test-create-truncates
-	[create overwrites any existing file with the same name]
 	(create '(tio dat) 1)
 	(putc 65 1) (putc 66 1) (putc 67 1)
 	(close 1)
-	[recreate - should wipe out the existing content]
 	(create '(tio dat) 1)
 	(putc 90 1)
 	(close 1)
 	(open '(tio dat) 1)
-	(assert 90 (getc 1))   [first byte is the new content]
+	(assert 90 (getc 1))
 	(close 1)>
 
 <deftest test-open-nonexistent
-	[opening a file that doesn't exist raises an error]
 	(assert-err (open '(no-such file) 1))>
 
 <deftest test-getc-bad-channel
-	[reading from a channel that isn't open raises an error]
 	(assert-err (getc 9))>

@@ -97,9 +97,7 @@ ERR20:
 ;***************************;
 ; SCAN CATCH STACK FOR 'ERR ;
 ;***************************;
-;If a (catch 'err ...) frame is in scope, throw 'err to it so the
-;error becomes catchable; else return to the original ERR REPL path.
-;See nkl-test.md.
+;If found, throw 'err so the error is catchable.  See nkl-test.md.
 ECHECK::
 	LD BC,ERRSYM
 	LD HL,(CBASE)		;START OF CATCH STACK
