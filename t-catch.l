@@ -3,53 +3,74 @@
 [Tags are matched by eq (pointer identity) - use interned symbols.]
 
 <deftest test-catch-no-throw
-    [body runs as implicit progn; last expression's value is returned]
-    (assert 42 (catch 'tag 42))
-    (assert 3 (catch 'tag 1 2 3))
-    (assert nil (catch 'tag nil))>
+	[body runs as implicit progn; last expression's value is returned]
+	(assert 42 (catch 'tag 42))
+	(assert 3 (catch 'tag 1 2 3))
+	(assert nil (catch 'tag nil))>
 
 <deftest test-catch-with-throw
-    [throw value is returned by the catch]
-    (assert 'caught (catch 'tag (throw 'tag 'caught)))
-    (assert 99 (catch 'tag (throw 'tag 99)))
-    (assert nil (catch 'tag (throw 'tag nil)))>
+	[throw value is returned by the catch]
+	(assert 'caught (catch 'tag (throw 'tag 'caught)))
+	(assert 99 (catch 'tag (throw 'tag 99)))
+	(assert nil (catch 'tag (throw 'tag nil)))>
 
 <deftest test-throw-short-circuits
-    [expressions after the throw are not evaluated]
-    (setq se nil)
-    (assert 'thrown
-        (catch 'tag
-            (throw 'tag 'thrown)
-            (setq se t)))
-    (assert nil se)>
+	[expressions after the throw are not evaluated]
+	(setq se nil)
+	(assert 'thrown
+		(catch 'tag
+			(throw 'tag 'thrown)
+			(setq se t)))
+	(assert nil se)>
 
 <deftest test-catch-nested-tags
-    [throw bypasses inner catch when tags differ]
-    (assert 'outer
-        (catch 'a
-            (catch 'b
-                (throw 'a 'outer))))
-    [throw to inner catch when tags match - inner catches first]
-    (assert 'inner
-        (catch 'a
-            (catch 'a
-                (throw 'a 'inner))))>
+	[throw bypasses inner catch when tags differ]
+	(assert 'outer
+		(catch 'a
+			(catch 'b
+				(throw 'a 'outer))))
+	[throw to inner catch when tags match - inner catches first]
+	(assert 'inner
+		(catch 'a
+			(catch 'a
+				(throw 'a 'inner))))>
 
 <deftest test-catch-t-tag
-    [t works as a catch-all-style tag]
-    (assert 'anything (catch t (throw t 'anything)))>
+	[t works as a catch-all-style tag]
+	(assert 'anything (catch t (throw t 'anything)))>
 
 <deftest test-catch-through-function
-    [throw works across function-call boundaries]
-    (de catch-helper () (throw 'h 'from-helper))
-    (assert 'from-helper (catch 'h (catch-helper)))>
+	[throw works across function-call boundaries]
+	(de catch-helper () (throw 'h 'from-helper))
+	(assert 'from-helper (catch 'h (catch-helper)))>
 
 <deftest test-catch-evaluates-body
-    [body is implicit progn - all expressions evaluated, last returned]
-    (setq i 0)
-    (assert 3
-        (catch 'tag
-            (inc i) (inc i) (inc i)))
-    (assert 3 i)>
+	[body is implicit progn - all expressions evaluated, last returned]
+	(setq i 0)
+	(assert 3
+		(catch 'tag
+			(inc i) (inc i) (inc i)))
+	(assert 3 i)>
 
-t
+<deftest test-throw-no-catch
+	(assert-err (throw 'no-catch-here 'x))>
+
+<deftest test-catch-err-no-error
+	(assert 42 (catch 'err 42))
+	(assert nil (catch 'err nil))>
+
+<deftest test-catch-err-auto-throw-value
+	(assert 'err (catch 'err (car 'x)))
+	(assert 'err (catch 'err (cdr 'x)))>
+
+<deftest test-catch-err-user-throw-passes-value
+	(assert 'foo (catch 'err (throw 'err 'foo)))
+	(assert 99 (catch 'err (throw 'err 99)))>
+
+<deftest test-catch-err-nested
+	(assert 'err
+		(catch 'err (catch 'err (car 'x))))>
+
+<deftest test-catch-err-through-other-catch
+	(assert 'err
+		(catch 'err (catch 'unrelated (car 'x))))>
