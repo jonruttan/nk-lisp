@@ -62,3 +62,31 @@
 	(assert nil (or nil nil))
 	(assert 1 (or 1 2 3))
 	(assert 2 (or nil 2 3))>
+
+<deftest test-reptn
+	[reptn evaluates body num times; returns last value]
+	(setq n 1)
+	(reptn 8 (setq n (2* n)))
+	(assert 256 n)
+	(assert 'last (reptn 3 'x 'last))>
+
+<deftest test-return
+	(de tcr-early (n)
+		(setq tcr-flag nil)
+		(if (zerop n) (return 'short))
+		(setq tcr-flag t)
+		'finished)
+	(assert 'short (tcr-early 0))
+	(assert nil tcr-flag)
+	(assert 'finished (tcr-early 1))
+	(assert t tcr-flag)>
+
+<deftest test-go
+	(de tcg-jump (n)
+		(go n)
+		1 (return 'one)
+		2 (return 'two)
+		3 (return 'three))
+	(assert 'one (tcg-jump 1))
+	(assert 'two (tcg-jump 2))
+	(assert 'three (tcg-jump 3))>
