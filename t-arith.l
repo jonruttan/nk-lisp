@@ -68,6 +68,30 @@
 	(assert 5 (abs -5))
 	(assert 0 (abs 0))>
 
+<deftest test-div-negative
+	[negative dividend, positive divisor: truncates toward zero]
+	(assert -3 (/ -10 3))>
+
+[BUG: negative divisor returns garbage (e.g. -508 for (/ 10 -3))]
+<deftest! test-div-negative-divisor
+	[spec: truncate toward zero, regardless of operand signs]
+	(assert -3 (/ 10 -3))
+	(assert 3 (/ -10 -3))>
+
+[BUG: modulo with negative operands gives inconsistent results]
+<deftest! test-mod-negative
+	[spec: sign of result matches sign of dividend (C convention)]
+	(assert -1 (% -10 3))
+	(assert 1 (% 10 -3))
+	(assert -1 (% -10 -3))>
+
+[BUG: (sqrt -1) returns -1 instead of erroring]
+<deftest! test-sqrt-negative
+	(assert-err (sqrt -1))>
+
+[(sqrt 0) raises Ovrfl that bypasses (catch 'err) - uncatchable]
+<pending test-sqrt-zero>
+
 <deftest test-min
 	(assert 1 (min 1 2))
 	(assert 1 (min 2 1))>
