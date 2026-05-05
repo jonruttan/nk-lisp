@@ -12,6 +12,17 @@
 	(assert nil (cdr '(1)))
 	(assert nil (cdr nil))>
 
+<deftest test-cxr-deep
+	[the eight 3-deep c*r combinators]
+	(assert 1 (caaar '(((1 a) b) c)))
+	(assert 2 (caadr '(a (2 b) c)))
+	(assert 3 (cadar '((a 3 b) c)))
+	(assert 4 (caddr '(a b 4)))
+	(assert '(d) (cdaar '(((a d) b) c)))
+	(assert '(e) (cdadr '(a (b e) c)))
+	(assert '(f) (cddar '((a b f) c)))
+	(assert '(g) (cdddr '(a b c g)))>
+
 <deftest test-cons
 	(assert '(1 . 2) (cons 1 2))
 	(assert '(1 2 3) (cons 1 '(2 3)))

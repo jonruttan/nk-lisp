@@ -290,7 +290,8 @@ a
 **`(remob 'symbol) -> symbol`**
   - Remove the symbol from the oblist.
   - _**NOTE:** The protected symbols (i.e. the symbols `t`, `quote`, `gc`,
-  `alloc`, `intern`, `ss`, `@`, and `step`) cannot be `remob`'ed._
+  `alloc`, `intern`, `ss`, `@`, and `step`) cannot be `remob`'ed.  Calling
+  `remob` on one returns the symbol but does not remove it from the oblist._
 
 ```lisp
 (car '(1 2 3))

@@ -80,3 +80,15 @@
 	[setting a fresh property list, then reading it back]
 	(putpl 'tspsym3 '(a 1 b 2))
 	(assert '(a 1 b 2) (getpl 'tspsym3))>
+
+<deftest test-remob
+	[remob removes a fresh symbol from the oblist]
+	(setq tsr (intern (pack '(r e m t e s t))))
+	(assert tsr (car (memq tsr (oblist))))
+	(remob tsr)
+	(assert nil (memq tsr (oblist)))>
+
+<deftest test-remob-protected
+	[protected symbols silently no-op; they stay in the oblist]
+	(remob 't) (assert t (boundp 't))
+	(remob 'quote) (assert t (eq 'a (quote a)))>
