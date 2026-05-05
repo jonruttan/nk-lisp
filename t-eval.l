@@ -42,9 +42,8 @@
 
 <deftest test-implied-if
 	[A list-headed form (cond X Y) is interpreted as IMPLIED IF, not as]
-	[a function call. The car is the condition, the first cdr element is]
-	[the true-branch, remaining elements are the false-branch. This explains]
-	[the [TODO: Why is this 2?] in nk-lisp.md - the docs were wrong.]
+	[a function call.  The car is the condition; the first cdr element]
+	[is the true-branch, remaining elements are the false-branch.]
 	[See CARCELL in nklisp.mac.]
 	(assert 2 ('((x y z) (* x (+ y z))) 2 3 4))
 	[if cond (a list) evals non-nil, return eval of first cdr element]
@@ -52,10 +51,3 @@
 	[implied-lambda still works through (apply) - APLCELL takes that path]
 	(assert 14 (apply '((x y z) (* x (+ y z))) '(2 3 4)))>
 
-[Implied-lambda direct call as documented does NOT work - registered
-as a pending so future maintainers can decide between fixing the
-interpreter to match docs or fixing the docs to match impl.  The
-expected behavior would be:
-	(assert 14 ('((x y z) (* x (+ y z))) 2 3 4))
-Currently returns 2 (the test-implied-if path treats it as IMPLIED IF).]
-<pending test-implied-lambda-direct-call>
