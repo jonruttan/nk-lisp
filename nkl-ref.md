@@ -946,6 +946,7 @@ optional, the default channel is the console device.
     lists, their `car` elements are used instead (or, if these are lists again
     the `car`-ing process continues until they are atomic). Then, if the first
     argument is strictly less than the second, `t` is returned, else `nil`.
+    Comparing values of different types raises an error.
 
 **`(minusp 'number) -> bool`**
   - If the argument is less than zero, `t` is returned, else `nil`.

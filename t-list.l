@@ -25,7 +25,10 @@
 <deftest test-append
 	(assert '(1 2 3 4) (append '(1 2) '(3 4)))
 	(assert '(1 2 3) (append '(1 2 3) nil))
-	(assert '(1 2 3) (append nil '(1 2 3)))>
+	(assert '(1 2 3) (append nil '(1 2 3)))
+	(assert nil (append nil nil))
+	[atom second arg yields a dotted tail per docs]
+	(assert '(1 2 3 . 4) (append '(1 2 3) 4))>
 
 <deftest test-reverse
 	(assert '(3 2 1) (reverse '(1 2 3)))

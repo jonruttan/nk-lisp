@@ -57,6 +57,25 @@
 	(assert nil (lessp 2 1))
 	(assert nil (lessp 1 1))>
 
+<deftest test-lessp-symbols
+	[lexical comparison on print-names]
+	(assert t (lessp 'a 'b))
+	(assert nil (lessp 'b 'a))
+	(assert nil (lessp 'a 'a))
+	(assert t (lessp 'abc 'abd))>
+
+<deftest test-lessp-lists
+	[compare car elements; recurse if cars are also lists]
+	(assert t (lessp '(1 x) '(2 y)))
+	(assert nil (lessp '(2 x) '(1 y)))
+	(assert t (lessp '((1) x) '((2) x)))>
+
+<deftest test-lessp-mixed
+	[cross-type comparison raises an error]
+	(assert-err (lessp 1 'a))
+	(assert-err (lessp 'a 1))>
+
+
 <deftest test-minusp
 	(assert t (minusp -1))
 	(assert nil (minusp 0))
