@@ -96,3 +96,12 @@ terminates the next spec's (revalo) prematurely.  Held pending
 until the interpreter resets parser state on close.]
 <pending test-read-eof>
 
+[(in 'file) sets LDFLG and opens the default file FCB, but the
+load itself only fires at the *next* top-level REVALO entry -
+not synchronously.  Inside a deftest body we're nested inside
+load-spec's (revalo 1), so the flag never takes effect during
+the test.  (key) reads from the console and has no scripted-
+input redirect.  Both need interpreter changes to be testable.]
+<pending test-in-redirect>
+<pending test-key>
+
