@@ -85,6 +85,14 @@
 	(assert '(1 2 3) (nconc nil '(1 2 3)))
 	(assert '(1 2 3) (nconc '(1 2 3) nil))>
 
+<deftest test-nconc-mutates
+	[first arg is mutated in place; second arg unchanged]
+	(setq x (list 1 2))
+	(setq y (list 3 4))
+	(nconc x y)
+	(assert '(1 2 3 4) x)
+	(assert '(3 4) y)>
+
 <deftest test-push-pop
 	(setq stk nil)
 	(push 1 stk)
@@ -109,4 +117,17 @@
 	[rplacd returns the mutated cell]
 	(setq p '(1 2))
 	(assert '(1 b c) (rplacd p '(b c)))>
+
+<deftest test-rplaca-shared
+	[mutating one alias is visible through the other]
+	(setq a (list 1 2))
+	(setq b a)
+	(rplaca a 'x)
+	(assert '(x 2) b)>
+
+<deftest test-rplacd-shared
+	(setq a (list 1 2))
+	(setq b a)
+	(rplacd a '(y))
+	(assert '(1 y) b)>
 
