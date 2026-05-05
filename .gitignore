@@ -6,3 +6,6 @@ bin/
 
 tmp
 \#*
+
+.test-output
+tags
