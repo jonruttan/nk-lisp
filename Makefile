@@ -61,16 +61,18 @@ run: $(PROG_NAME).com
 
 # ----- Tests -----
 
-# test greps stdout for "FAIL " (any spec failed) or absence of
-# OK/FAIL (interpreter crashed before harness ran).
+# test greps stdout for "FAIL " (any spec failed) or absence of the
+# DONE sentinel (interpreter crashed mid-run).
 test: $(PROG_NAME).com
 	@$(CPM) --exec $(PROG_NAME) runtests.l 2>&1 | tee .test-output
 	@if grep -q '^FAIL ' .test-output; then exit 1; fi
-	@grep -qE '^(OK|FAIL) ' .test-output || { echo "TESTS CRASHED"; exit 2; }
+	@grep -q '^DONE' .test-output || { echo "TESTS CRASHED"; exit 2; }
 
 # Single-spec shortcut: `make test-ctrl`, `make test-eval`, etc.
+# alloc 3 so a spec that loads its own dependencies (e.g., t-too
+# loads too.l on channel 2) has slots available.
 test-%: $(PROG_NAME).com
-	@printf "(alloc 2)\n(open '(harness l) 1) (revalo 1) (close 1)\n(loadSpec '(t-$* l))\n(bdos 0)\nt\n" > r-$*.l
+	@printf "(alloc 3)\n(open '(harness l) 1) (revalo 1) (close 1)\n(load-spec '(t-$* l))\n(bdos 0)\n" > r-$*.l
 	@$(CPM) --exec $(PROG_NAME) r-$*.l; rm -f r-$*.l
 
 .PHONY: test run files difflist clean tar all
