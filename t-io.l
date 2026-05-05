@@ -69,3 +69,30 @@
 
 <deftest test-getc-bad-channel
 	(assert-err (getc 9))>
+
+<deftest test-print-vs-prin1
+	[print is prin1 + CRLF (13 10)]
+	(create '(tio dat) 1)
+	(print 'X 1)
+	(close 1)
+	(open '(tio dat) 1)
+	(assert 88 (getc 1))		[X]
+	(assert 13 (getc 1))		[CR]
+	(assert 10 (getc 1))		[LF]
+	(close 1)>
+
+<deftest test-cr-writes-crlf
+	(create '(tio dat) 1)
+	(cr 1)
+	(close 1)
+	(open '(tio dat) 1)
+	(assert 13 (getc 1))
+	(assert 10 (getc 1))
+	(close 1)>
+
+[(read 1) past EOF returns nil but leaves the global NXTCHR
+lookahead set to EOFCHR, which leaks across (close 1) and
+terminates the next spec's (revalo) prematurely.  Held pending
+until the interpreter resets parser state on close.]
+<pending test-read-eof>
+

@@ -19,6 +19,12 @@
 	(assert t (symbolp g2))
 	(assert nil (eq g1 g2))>
 
+<deftest test-gensym-format
+	[gensym returns a 6-char symbol whose first char is G]
+	(setq g (gensym))
+	(assert 6 (length (unpack g)))
+	(assert 71 (ascii (car (unpack g))))>
+
 <deftest test-unpack-length
 	[unpack returns a list of single-char symbols, one per char]
 	(assert 4 (length (unpack 'abcd)))
