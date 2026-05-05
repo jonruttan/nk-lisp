@@ -24,12 +24,11 @@
 <deftest test-div
 	(assert 5 (/ 10 2))
 	(assert 3 (/ 10 3))
-	[round flag direction is implementation-defined and not in the docs;]
-	[empirically: (/ 8 3 t) = 2, (/ 7 2 t) = 3 - rounds toward zero in some]
-	[cases. Test only exact cases where rounding is unambiguous.]
-	(assert 5 (/ 10 2 t))
-	(assert 3 (/ 9 3 t))
+	(assert 2 (/ 8 3))		[truncates toward zero]
+	(assert 3 (/ 7 2))
+	(assert 0 (/ 2 3))
 	(assert-err (/ 1 0))>
+
 
 <deftest test-mod
 	(assert 1 (% 10 3))
@@ -51,15 +50,18 @@
 
 <deftest test-half
 	(assert 3 (2/ 6))
-	(assert 2 (2/ 5))
-	[round flag direction is implementation-defined; test exact halves only]
-	(assert 3 (2/ 6 t))
-	(assert 5 (2/ 10 t))>
+	(assert 2 (2/ 5))		[truncates toward zero]
+	(assert 3 (2/ 7))
+	(assert 0 (2/ 1))>
 
 <deftest test-sqrt
 	(assert 3 (sqrt 9))
 	(assert 4 (sqrt 16))
-	(assert 10 (sqrt 100))>
+	(assert 10 (sqrt 100))
+	(assert 1 (sqrt 2))		[floor of true sqrt]
+	(assert 2 (sqrt 8))
+	(assert 3 (sqrt 15))
+	(assert 4 (sqrt 17))>
 
 <deftest test-abs
 	(assert 5 (abs 5))

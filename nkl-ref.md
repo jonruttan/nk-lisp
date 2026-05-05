@@ -870,8 +870,8 @@ optional, the default channel is the console device.
 **`(* 'number 'number) -> number`**
   - Multiplication.
 
-**`(/ 'number 'number ['round]) -> number`**
-  - Division. Rounded if `round` is non-nil.
+**`(/ 'number 'number) -> number`**
+  - Integer division.  Truncates toward zero.
 
 **`(% 'number 'number) -> number`**
   - Modulus.
@@ -885,11 +885,11 @@ optional, the default channel is the console device.
 **`(2* 'number) -> number`**
   - Multiply by two (shift left).
 
-**`(2/ 'number ['round]) -> number`**
-  - Divide by two (shift right). Rounded if `round` is non-nil.
+**`(2/ 'number) -> number`**
+  - Divide by two (shift right).  Truncates toward zero.
 
-**`(sqrt 'number ['round]) -> number`**
-  - Square root. Rounded if `round` is non-nil.
+**`(sqrt 'number) -> number`**
+  - Integer square root.  Returns the floor of the true square root.
 
 **`(inc symbol) -> Symbol's new value`**
   - `(inc i)` is equivalent to `(setq i (1+ i))`.
