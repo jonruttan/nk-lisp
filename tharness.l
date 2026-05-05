@@ -26,4 +26,18 @@
     (asserteq 'foo 'foo)
     (asserteq nil nil)>
 
+[assert-err: catches an interpreter error.  (car 'x) raises a type
+error; assert-err passes when the body errors.  Confirms the
+catch-'err machinery in nklisp.mac and the assert-err wrapper are
+both wired up.]
+<deftest tharness-assert-err
+    (assert-err (car 'x))>
+
+[deftest!: expected-fail.  Body must contain a failing assertion
+or the xfail-test itself fails.  Exercises the harness's own
+failure-detection path; if the recorded-failures machinery breaks,
+this test starts passing unexpectedly and the suite goes red.]
+<deftest! tharness-expected-fail
+    (assert 1 2)>
+
 t
