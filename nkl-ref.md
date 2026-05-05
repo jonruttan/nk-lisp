@@ -1128,6 +1128,12 @@ c
     matching (is eq to) the tag of the catch. In this case the evaluation of body
     is aborted and the value of throw returned immediately.
 
+  - The special tag `'err` catches **interpreter-raised errors** in
+    addition to user `(throw)`s.  `(catch 'err (car 'x))` returns
+    the symbol `'err` instead of dropping into the REPL.  See
+    [nkl-test.md](nkl-test.md) for the catchable-error contract and
+    its limitations.
+
 **`(throw 'tag 'value) [No return to caller]`**
   - Transfer control to the matching catch construct. The tag is first
     evaluated to produce the throw tag and the most recent outstanding catch

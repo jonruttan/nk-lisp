@@ -255,19 +255,17 @@ equivalent to `^C`. Always call `alloc` at the *top level*, never inside a
 function body or `progn`. Calling it mid-evaluation will silently abort
 whatever you were doing and dump you back at the top-level prompt.
 
-### 5.4. Loaded files should end in `t`
+### 5.4. REVALO termination
 
-The reader and REPL share a loop (`revalo`). When it reads from a file,
-it keeps reading expressions until it sees the literal symbol `t` —
-that's its exit signal. A file that ends without a trailing `t` may
-either drop you into an unexpected prompt or, in nested loads, read
-garbage past the end of the file.
+The reader and REPL share a loop (`revalo`). When it reads from a
+file, it terminates on either EOF or the literal symbol `t` — both
+work. The trailing `t` is a legacy signal still respected for
+compatibility, but new files don't need it.
 
 ```lisp
 [contents.l]
 (de answer () 42)
 (de question () 'unknown)
-t                         [<-- terminator]
 ```
 
 ### 5.5. Numeric tokens read as numbers, not symbols
