@@ -415,8 +415,9 @@ optional, the default channel is the console device.
 (sp 1)
 ```
 
-**`(key) -> byte or nil`**
-  - Return the next byte of keyboard input, or `nil` if no input is available.
+**`(key ['channel]) -> byte`**
+  - With no argument, busy-waits for a console keystroke and returns it.
+  - With a channel, returns the next byte from that channel (does not wait).
 
 ```lisp
 (key)

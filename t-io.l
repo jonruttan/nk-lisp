@@ -100,6 +100,15 @@
 	(assert nil (read 1))
 	(close 1)>
 
+<deftest test-key-channel
+	[(key CH) reads next byte from channel CH]
+	(create '(tio dat) 1)
+	(putc 65 1)
+	(close 1)
+	(open '(tio dat) 1)
+	(assert 65 (key 1))
+	(close 1)>
+
 <deftest test-import-loads-forms
 	[harness's import is a sync read-eval loop, no interpreter change]
 	(create '(tio dat) 1)
@@ -108,8 +117,4 @@
 	(setq tin-result 0)
 	(import '(tio dat))
 	(assert 99 tin-result)>
-
-[(key) reads from the console with no scripted-input mechanism;
-needs interpreter change to be testable.]
-<pending test-key>
 
