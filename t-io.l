@@ -100,12 +100,16 @@
 	(assert nil (read 1))
 	(close 1)>
 
-[(in 'file) sets LDFLG and opens the default file FCB, but the
-load itself only fires at the *next* top-level REVALO entry -
-not synchronously.  Inside a deftest body we're nested inside
-load-spec's (revalo 1), so the flag never takes effect during
-the test.  (key) reads from the console and has no scripted-
-input redirect.  Both need interpreter changes to be testable.]
-<pending test-in-redirect>
+<deftest test-import-loads-forms
+	[harness's import is a sync read-eval loop, no interpreter change]
+	(create '(tio dat) 1)
+	(prin1 '(setq tin-result 99) 1)
+	(close 1)
+	(setq tin-result 0)
+	(import '(tio dat))
+	(assert 99 tin-result)>
+
+[(key) reads from the console with no scripted-input mechanism;
+needs interpreter change to be testable.]
 <pending test-key>
 

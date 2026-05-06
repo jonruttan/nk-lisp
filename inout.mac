@@ -702,6 +702,8 @@ IR10:
 ;******************;
 SKIPW::
 	LD A,(NXTCHR)
+	CP EOFCHR			;STICKY EOF
+	RET Z
 	CP 33				;NEXT CHAR WHITE?
 	JR NC,SW20			;NO-JMP
 SW10:

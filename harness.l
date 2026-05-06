@@ -161,4 +161,14 @@ conditions separately instead of conflating them.]
 	(close 1)
 	(run-tests (car name))>
 
+[Synchronous read-eval of a source file on channel 2.  Terminates
+on first nil form (or true EOF).]
+<de import (file)
+	(open file 2)
+	(setq import-form (read 2))
+	(while import-form
+		(eval import-form)
+		(setq import-form (read 2)))
+	(close 2)>
+
 t)
