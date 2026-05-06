@@ -90,11 +90,15 @@
 	(assert 10 (getc 1))
 	(close 1)>
 
-[(read 1) past EOF returns nil but leaves the global NXTCHR
-lookahead set to EOFCHR, which leaks across (close 1) and
-terminates the next spec's (revalo) prematurely.  Held pending
-until the interpreter resets parser state on close.]
-<pending test-read-eof>
+<deftest test-read-eof
+	[read past the last sexp returns nil silently (no error)]
+	(create '(tio dat) 1)
+	(prin1 42 1)
+	(close 1)
+	(open '(tio dat) 1)
+	(assert 42 (read 1))
+	(assert nil (read 1))
+	(close 1)>
 
 [(in 'file) sets LDFLG and opens the default file FCB, but the
 load itself only fires at the *next* top-level REVALO entry -
