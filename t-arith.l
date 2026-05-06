@@ -89,8 +89,8 @@
 <deftest! test-sqrt-negative
 	(assert-err (sqrt -1))>
 
-[(sqrt 0) raises Ovrfl that bypasses (catch 'err) - uncatchable]
-<pending test-sqrt-zero>
+<deftest test-sqrt-zero
+	(assert 0 (sqrt 0))>
 
 <deftest test-min
 	(assert 1 (min 1 2))
