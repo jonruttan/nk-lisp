@@ -98,13 +98,16 @@ ERR20:
 ; SCAN CATCH STACK FOR 'ERR ;
 ;***************************;
 ;If found, throw 'err so the error is catchable.  See nkl-test.md.
+;Preserves HL: TYPERR depends on HL holding the offending value
+;across this call before its PRIN1.
 ECHECK::
+	PUSH HL			;SAVE HL FOR CALLERS
 	LD BC,ERRSYM
 	LD HL,(CBASE)		;START OF CATCH STACK
 	LD DE,(SINIT)		;END OF STACK
 ECSCAN:
 	CPDE			;DONE?
-	RET NC			;YES-NO 'ERR FRAME
+	JR NC,ECRET		;YES-NO 'ERR FRAME
 	LD A,C			;COMPARE TAG LOW
 	CP (HL)
 	INC HL
@@ -116,7 +119,11 @@ ECNEXT:
 	INC HL
 	FETCH			;NEXT CATCH LINK
 	JR ECSCAN
+ECRET:
+	POP HL			;RESTORE HL
+	RET
 ECFOUND:
+	POP DE			;DISCARD SAVED HL (THROW DOESN'T RETURN)
 	LD HL,ERRSYM		;THROW 'ERR
 	LD DE,ERRSYM
 	JP THROW
